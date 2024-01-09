@@ -12,6 +12,12 @@ const server = http.createServer(app);
 const logger = require("morgan");
 const cors = require("cors");
 
+/**
+ * Aquí se van a importar las rutas:
+ */
+
+const usersRoutes = require("./routes/userRoutes");
+
 const port = process.env.PORT || 3000;
 
 // Configuraciones del backend para debugging y seguridad:
@@ -27,6 +33,12 @@ app.disable("x-powered-by");
 
 //Asignación del puerto para la ejecución del sv:
 app.set("port", port);
+
+/**
+ * Llamado de las rutas:
+ */
+
+usersRoutes(app);
 
 // Siempre revisar la ip que tiene el PC, al reiniciar.
 server.listen(3000, "192.168.1.7", "localhost", function () {
