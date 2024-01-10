@@ -1,9 +1,14 @@
 // Obtenemos la configuración de la db:
 const db = require("../config/config");
 
+// Para encriptar la password:
+const bcrypt = require("bcryptjs");
+
 const User = {};
 
-User.create = (user, result) => {
+User.create = async (user, result) => {
+  const hash = await bcrypt.hash(user.password, 10);
+
   const sql = `
         INSERT INTO
             users(
@@ -27,7 +32,7 @@ User.create = (user, result) => {
       user.lastname,
       user.phone,
       user.image,
-      user.password,
+      hash,
       new Date(),
       new Date(),
     ],
