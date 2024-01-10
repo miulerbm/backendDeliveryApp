@@ -12,6 +12,9 @@ const server = http.createServer(app);
 const logger = require("morgan");
 const cors = require("cors");
 
+// Vamos a configurar la parte final de la respuesta para login:
+const passport = require("passport");
+
 /**
  * Aquí se van a importar las rutas:
  */
@@ -21,7 +24,14 @@ const usersRoutes = require("./routes/userRoutes");
 const port = process.env.PORT || 3000;
 
 // Configuraciones del backend para debugging y seguridad:
+
+// Config para la autenticación web:
 app.use(logger("dev"));
+app.use(passport.initialize());
+app.use(passport.session());
+
+require("./config/passport")(passport);
+
 app.use(express.json());
 app.use(
   express.urlencoded({
