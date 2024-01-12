@@ -74,3 +74,35 @@ CREATE TABLE user_has_roles(
 	FOREIGN KEY(id_rol) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY(id_user, id_rol)
 );
+
+-- Un Query que concatena varios strings en JSON:
+
+    -- SELECT
+    --   U.id,
+    --   U.email,
+    --   U.name,
+    --   U.lastname,
+    --   U.image,
+    --   U.password,
+    --   json_arrayagg(
+	-- 	json_object(
+	-- 		'id', R.id,
+    --         'name', R.name,
+    --         'image', R.image,
+    --         'route', R.route
+    --     )
+    --   ) AS roles
+    -- FROM
+    --   users AS U
+	-- INNER JOIN
+	-- 	user_has_roles AS UHR
+	-- ON
+	-- 	UHR.id_user = U.id
+	-- INNER JOIN
+	-- 	roles AS R
+	-- ON
+	-- 	UHR.id_rol = R.id
+    -- WHERE
+    --   email = 'rumpvsi@gmail.com'
+	-- GROUP BY
+	-- 	U.id
