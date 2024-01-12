@@ -55,6 +55,8 @@ module.exports = {
           image: myUser.image,
           // Nuevo campo:
           session_token: `JWT ${token}`,
+          // Devolvemos los roles tambien:
+          roles: myUser.roles,
         };
 
         // Si no hubo error:

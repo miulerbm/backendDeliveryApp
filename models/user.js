@@ -9,17 +9,35 @@ const User = {};
 // Nuevo método: Find by ID
 User.findById = (id, result) => {
   const sql = `
-    SELECT
-      id,
-      email,
-      name,
-      lastname,
-      image,
-      password
-    FROM
-      users
-    WHERE
-      id = ?
+      SELECT
+        U.id,
+        U.email,
+        U.name,
+        U.lastname,
+        U.image,
+        U.password,
+        json_arrayagg(
+        json_object(
+        'id', R.id,
+              'name', R.name,
+              'image', R.image,
+              'route', R.route
+          )
+        ) AS roles
+      FROM
+        users AS U
+      INNER JOIN
+        user_has_roles AS UHR
+      ON
+        UHR.id_user = U.id
+      INNER JOIN
+        roles AS R
+      ON
+        UHR.id_rol = R.id
+      WHERE
+        id = ?
+      GROUP BY
+        U.id
   `;
 
   db.query(sql, [id], (err, user) => {
@@ -33,20 +51,38 @@ User.findById = (id, result) => {
   });
 };
 
-// Nuevo método: Find by email
+// Ahora el findByEmail nos dará una columna agregada en formato JSON, con detalles de roles de los users.
 User.findByEmail = (email, result) => {
   const sql = `
     SELECT
-      id,
-      email,
-      name,
-      lastname,
-      image,
-      password
+        U.id,
+        U.email,
+        U.name,
+        U.lastname,
+        U.image,
+        U.password,
+        json_arrayagg(
+      json_object(
+        'id', R.id,
+              'name', R.name,
+              'image', R.image,
+              'route', R.route
+          )
+        ) AS roles
     FROM
-      users
-    WHERE
-      email = ?
+        users AS U
+    INNER JOIN
+      user_has_roles AS UHR
+    ON
+      UHR.id_user = U.id
+    INNER JOIN
+      roles AS R
+    ON
+      UHR.id_rol = R.id
+      WHERE
+        email = ?
+    GROUP BY
+      U.id
   `;
 
   db.query(sql, [email], (err, user) => {
