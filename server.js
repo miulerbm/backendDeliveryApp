@@ -15,6 +15,9 @@ const cors = require("cors");
 // Vamos a configurar la parte final de la respuesta para login:
 const passport = require("passport");
 
+// Importamos librerías para manejar imágenes en el backend:
+const multer = require("multer");
+
 /**
  * Aquí se van a importar las rutas:
  */
@@ -44,11 +47,17 @@ app.disable("x-powered-by");
 //Asignación del puerto para la ejecución del sv:
 app.set("port", port);
 
+// Utilizamos el multer:
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+
 /**
  * Llamado de las rutas:
  */
 
-usersRoutes(app);
+usersRoutes(app, upload);
 
 // Siempre revisar la ip que tiene el PC, al reiniciar.
 server.listen(3000, "192.168.1.7", "localhost", function () {

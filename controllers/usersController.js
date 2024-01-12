@@ -4,6 +4,8 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
+// Requerimos el storage:
+const storage = require("../utils/cloud_storage");
 
 module.exports = {
   // Definimos el método login para mandarle al cliente la respuesta del inicio de sesión:
@@ -91,5 +93,70 @@ module.exports = {
         data: data, // DATA es solo la ID del usuario que se registró, según definimos en user.js
       });
     });
+  },
+  // Nuevo método para registrar el usuario con su imagen:
+  async registerWithImage(req, res) {
+    // Obtenemos el usuario de distinta manera:
+    const user = JSON.parse(req.body.user);
+
+    // Almacenamos la imagen:
+    const files = req.files; // Estos son los archivos que va a enviar el usuario.
+
+    // Validamos que tengamos archivos:
+    if (files.length > 0) {
+      const path = `image_${Date.now()}`; // Este es el nombre con el que se creará la imagen (no se repetirá) en firebase
+      const url = await storage(files[0], path); // Mandamos el único archivo que mandaremos (la imagen del usuario)
+
+      if (url != undefined && url != null) {
+        // Si el file vino como no nulo y como no undefined:
+        // Pasaremos la url generada al guardar la imagen como la prop image de user:
+        user.image = url;
+      }
+    }
+
+    User.create(user, (err, data) => {
+      if (err) {
+        return res.status(501).json({
+          success: false,
+          message: "Hubo un error con el registro del usuario",
+          error: err,
+        });
+      }
+
+      user.id = `${data}`;
+      // Una vez que el usuario se registra, también hacemos que automáticamente inicie sesión y genere su token:
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        keys.secretOrKey,
+        {}
+      );
+      // Añadimos el session token al user que se retornará:
+      user.session_token = `JWT ${token}`;
+
+      return res.status(201).json({
+        success: true,
+        message: "El registro se realizó correctamente",
+        // Vamos a retornar todo el usuario, no solo su id:
+        data: user,
+      });
+    });
+
+    //   User.create(user, (err, data) => {
+    //     if (err) {
+    //       return res.status(501).json({
+    //         success: false,
+    //         message: "Hubo un error con el registro del usuario",
+    //         error: err,
+    //       });
+    //     }
+
+    //     user.id = data;
+
+    //     return res.status(201).json({
+    //       success: true,
+    //       message: "El registro se realizo correctamente",
+    //       data: user,
+    //     });
+    //   });
   },
 };
