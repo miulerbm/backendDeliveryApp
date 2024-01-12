@@ -56,7 +56,7 @@ module.exports = {
           // Nuevo campo:
           session_token: `JWT ${token}`,
           // Devolvemos los roles tambien:
-          roles: myUser.roles,
+          roles: JSON.parse(myUser.roles),
         };
 
         // Si no hubo error:

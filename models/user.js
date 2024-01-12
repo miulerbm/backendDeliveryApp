@@ -18,7 +18,7 @@ User.findById = (id, result) => {
         U.password,
         json_arrayagg(
         json_object(
-        'id', R.id,
+              'id', CONVERT(R.id, char),
               'name', R.name,
               'image', R.image,
               'route', R.route
@@ -63,7 +63,7 @@ User.findByEmail = (email, result) => {
         U.password,
         json_arrayagg(
       json_object(
-        'id', R.id,
+              'id', CONVERT(R.id, char),
               'name', R.name,
               'image', R.image,
               'route', R.route
