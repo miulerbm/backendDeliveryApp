@@ -1,5 +1,7 @@
 // Llamamos al modelo user y a los métodos de los que dispone:
 const User = require("../models/user");
+// Requerimos el modelo del rol:
+const Rol = require("../models/rol");
 // Para comparar las passwords ingresadas por el usuario y las encriptadas:
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -132,13 +134,27 @@ module.exports = {
       );
       // Añadimos el session token al user que se retornará:
       user.session_token = `JWT ${token}`;
-
-      return res.status(201).json({
-        success: true,
-        message: "El registro se realizó correctamente",
-        // Vamos a retornar todo el usuario, no solo su id:
-        data: user,
-      });
+      // Creamos el rol por defecto:
+      Rol.create(
+        user.id,
+        3,
+        (err,
+        (data) => {
+          if (err) {
+            return res.status(501).json({
+              success: false,
+              message: "Hubo un error con el registro del usuario",
+              error: err,
+            });
+          }
+          return res.status(201).json({
+            success: true,
+            message: "El registro se realizó correctamente",
+            // Vamos a retornar todo el usuario, no solo su id:
+            data: user,
+          });
+        })
+      ); // Pasamos el id del user, y el id de CLIENTE, que siempre será 3 (tabla roles)
     });
 
     //   User.create(user, (err, data) => {
