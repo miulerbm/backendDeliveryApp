@@ -15,6 +15,7 @@ User.findById = (id, result) => {
         U.name,
         U.lastname,
         U.image,
+        U.phone,
         U.password,
         json_arrayagg(
         json_object(
@@ -60,6 +61,7 @@ User.findByEmail = (email, result) => {
         U.name,
         U.lastname,
         U.image,
+        U.phone,
         U.password,
         json_arrayagg(
       json_object(
