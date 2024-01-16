@@ -36,7 +36,7 @@ User.findById = (id, result) => {
       ON
         UHR.id_rol = R.id
       WHERE
-        id = ?
+        U.id = ?
       GROUP BY
         U.id
   `;
