@@ -196,10 +196,11 @@ module.exports = {
       if (err) {
         return res.status(501).json({
           success: false,
-          message: "Hubo un error con el registro del usuario",
+          message: "Hubo un error con la actualización del usuario",
           error: err,
         });
       }
+
       return res.status(201).json({
         success: true,
         message: "El registro se actualizó correctamente",
@@ -209,7 +210,8 @@ module.exports = {
   },
 
   async updateWithoutImage(req, res) {
-    const user = req.body.user;
+    const user = req.body;
+    console.log("req.body", req.body);
 
     User.updateWithoutImage(user, (err, data) => {
       if (err) {
