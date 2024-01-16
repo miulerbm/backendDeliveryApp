@@ -203,7 +203,7 @@ module.exports = {
 
       return res.status(201).json({
         success: true,
-        message: "El registro se actualizó correctamente",
+        message: "El usuario se actualizó correctamente",
         data: user,
       });
     });
@@ -217,13 +217,13 @@ module.exports = {
       if (err) {
         return res.status(501).json({
           success: false,
-          message: "Hubo un error con el registro del usuario",
+          message: "Hubo un error con la actualización del usuario",
           error: err,
         });
       }
       return res.status(201).json({
         success: true,
-        message: "El registro se actualizó correctamente",
+        message: "El usuario se actualizó correctamente",
         data: user,
       });
     });
