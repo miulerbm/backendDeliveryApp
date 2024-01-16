@@ -106,3 +106,14 @@ CREATE TABLE user_has_roles(
     --   email = 'rumpvsi@gmail.com'
 	-- GROUP BY
 	-- 	U.id
+
+    --CREANDO LA TABLA DE CATEGORÍAS
+
+CREATE TABLE categories(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(180) NOT NULL,
+    description TEXT NOT NULL,
+    image VARCHAR(255) NULL,
+    created_at TIMESTAMP(0) NOT NULL,
+    updated_at TIMESTAMP(0) NOT NULL
+);
