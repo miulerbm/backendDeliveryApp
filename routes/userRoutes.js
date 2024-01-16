@@ -12,4 +12,13 @@ module.exports = (app, upload) => {
   );
   // Creamos la ruta para ejecutar el login:
   app.post("/api/users/login", usersController.login);
+
+  // RUTAS PUT para Actualizar:
+  app.put(
+    "/api/users/update",
+    upload.array("image", 1),
+    usersController.updateWithImage
+  );
+
+  app.put("/api/users/updateWithoutImage", usersController.updateWithoutImage);
 };
