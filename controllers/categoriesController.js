@@ -2,6 +2,19 @@ const Category = require("../models/category");
 const storage = require("../utils/cloud_storage");
 
 module.exports = {
+  async getAll(req, res) {
+    Category.getAll((err, data) => {
+      if (err) {
+        return res.status(501).json({
+          success: false,
+          message: "Hubo un error al momento de listar las categorías",
+          error: err,
+        });
+      }
+      return res.status(201).json(data);
+    });
+  },
+
   async create(req, res) {
     const category = JSON.parse(req.body.category);
     const files = req.files;

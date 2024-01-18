@@ -1,6 +1,31 @@
 const db = require("../config/config");
 const Category = {};
 
+Category.getAll = (result) => {
+  const sql = `
+    SELECT
+      id,
+      name,
+      description,
+      image
+    FROM
+      categories
+    ORDER BY
+      name
+  `;
+
+  db.query(sql, (err, data) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(err, null);
+    } else {
+      console.log("Id de la nueva categoría:", data);
+      // Como result, solo se manda el id de la categoría registrada
+      result(null, data);
+    }
+  });
+};
+
 Category.create = (category, result) => {
   const sql = `
     INSERT INTO
