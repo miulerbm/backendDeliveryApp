@@ -14,4 +14,9 @@ module.exports = (app, upload) => {
     // Ahora viene el método a disparar cuando el cliente hace un petición a esta ruta:
     categoriesController.create
   );
+  app.delete(
+    "/api/categories/delete/:id",
+    passport.authenticate("jwt", { session: false }),
+    categoriesController.delete
+  );
 };

@@ -38,7 +38,26 @@ module.exports = {
 
       return res.status(201).json({
         success: true,
-        message: "La categoría se realizó correctamente",
+        message: "La categoría se creó correctamente",
+        data: `${id}`,
+      });
+    });
+  },
+
+  async delete(req, res) {
+    const id = req.params.id;
+    Category.delete(id, (err, data) => {
+      if (err) {
+        return res.status(501).json({
+          success: false,
+          message: "Hubo un error al momento de eliminar una categoria",
+          error: err,
+        });
+      }
+
+      return res.status(201).json({
+        success: true,
+        message: "La categoría se eliminó correctamente",
         data: `${id}`,
       });
     });
