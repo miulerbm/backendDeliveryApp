@@ -61,6 +61,43 @@ Category.create = (category, result) => {
   );
 };
 
+// Métodos para actualizar una categoría
+
+Category.update = (category, result) => {
+  const sql = `
+    UPDATE
+      categories
+    SET
+      name = ?,
+      description = ?,
+      image = ?
+      updated_at = ?
+    WHERE
+      id = ?
+  `;
+
+  db.query(
+    sql,
+    [
+      category.name,
+      category.description,
+      category.image,
+      new Date(),
+      category.id,
+    ],
+    (err, res) => {
+      if (err) {
+        console.log("Error: ", err);
+        result(err, null);
+      } else {
+        console.log("Id de la categoría actualizada:", category.id);
+        // Como result, solo se manda el id de la categoría registrada
+        result(null, category.id);
+      }
+    }
+  );
+};
+
 // Método para eliminar una categoría
 Category.delete = (id, result) => {
   const sql = `

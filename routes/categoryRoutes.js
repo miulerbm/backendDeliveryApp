@@ -14,6 +14,17 @@ module.exports = (app, upload) => {
     // Ahora viene el método a disparar cuando el cliente hace un petición a esta ruta:
     categoriesController.create
   );
+  app.put(
+    "/api/categories/updateWithImage",
+    passport.authenticate("jwt", { session: false }),
+    upload.array("image", 1),
+    categoriesController.updateWithImage
+  );
+  app.put(
+    "/api/categories/update",
+    passport.authenticate("jwt", { session: false }),
+    categoriesController.update
+  );
   app.delete(
     "/api/categories/delete/:id",
     passport.authenticate("jwt", { session: false }),
