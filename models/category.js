@@ -70,7 +70,7 @@ Category.update = (category, result) => {
     SET
       name = ?,
       description = ?,
-      image = ?
+      image = ?,
       updated_at = ?
     WHERE
       id = ?
