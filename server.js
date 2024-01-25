@@ -24,6 +24,7 @@ const multer = require("multer");
 
 const usersRoutes = require("./routes/userRoutes");
 const categoriesRoutes = require("./routes/categoryRoutes");
+const productRoutes = require("./routes/productRoutes");
 
 const port = process.env.PORT || 3000;
 
@@ -60,6 +61,7 @@ const upload = multer({
 
 usersRoutes(app, upload);
 categoriesRoutes(app, upload);
+productRoutes(app, upload);
 
 // Siempre revisar la ip que tiene el PC, al reiniciar.
 server.listen(3000, "192.168.1.7", "localhost", function () {
