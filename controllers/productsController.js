@@ -4,7 +4,7 @@ const asyncForEach = require("../utils/async_foreach");
 
 module.exports = {
   async create(req, res) {
-    const user = JSON.parse(req.body.product);
+    const product = JSON.parse(req.body.product);
 
     // DEBEMOS INSERTAR 3 IMÁGENES EN UNA SOLA PETICIÓN
     const files = req.files; // Estos son los archivos que va a enviar el producto.
