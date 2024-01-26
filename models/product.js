@@ -1,6 +1,37 @@
 const db = require("../config/config");
 const Product = {};
 
+// Método: Find By Category
+// Recibirá el id de la categoría de la cual se quieren listar los productos
+Product.findByCategory = (id_category, result) => {
+  const sql = `
+    SELECT
+      P.id,
+      P.name,
+      P.description,
+      P.price,
+      P.image1,
+      P.image2,
+      P.image3,
+      P.id_category
+    FROM
+      products as P
+    WHERE
+      P.id_category = ?
+  `;
+
+  db.query(sql, [id_category], (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(err, null);
+    } else {
+      console.log("Lista de productos:", res);
+      // Esto nos devuelve una lista de objetos JSON
+      result(null, res);
+    }
+  });
+};
+
 Product.create = (product, result) => {
   const sql = `
     INSERT INTO

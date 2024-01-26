@@ -7,6 +7,13 @@ module.exports = (app, upload) => {
   //   passport.authenticate("jwt", { session: false }),
   //   categoriesController.getAll
   // );
+  app.get(
+    "/api/products/findByCategory/:id_category", // En la ruta recibimos el id_category en los params (no en el body)
+    // Si es put o post, los datos van en el body, si es delete o get por convención en los params.
+    passport.authenticate("jwt", { session: false }),
+    // Ahora viene el método a disparar cuando el cliente hace un petición a esta ruta:
+    productsController.findByCategory
+  );
   app.post(
     "/api/products/create",
     passport.authenticate("jwt", { session: false }),
