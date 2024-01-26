@@ -9,7 +9,7 @@ module.exports = {
       if (err) {
         return res.status(501).json({
           success: false,
-          message: "Hubo un error al momento de listar las categorías",
+          message: "Hubo un error al momento de listar los productos",
           error: err,
         });
       }
@@ -96,5 +96,24 @@ module.exports = {
         start();
       });
     }
+  },
+
+  // Método para eliminar producto por id:
+  async delete(req, res) {
+    const id = req.params.id;
+    Product.delete(id, (err, id) => {
+      if (err) {
+        return res.status(501).json({
+          success: false,
+          message: "Hubo un error al momento de eliminar el producto",
+          error: err,
+        });
+      }
+      return res.status(201).json({
+        success: true,
+        message: "El producto se eliminó correctamente",
+        data: `${id}`,
+      });
+    });
   },
 };

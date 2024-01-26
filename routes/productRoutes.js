@@ -32,9 +32,9 @@ module.exports = (app, upload) => {
   //   passport.authenticate("jwt", { session: false }),
   //   categoriesController.update
   // );
-  // app.delete(
-  //   "/api/categories/delete/:id",
-  //   passport.authenticate("jwt", { session: false }),
-  //   categoriesController.delete
-  // );
+  app.delete(
+    "/api/products/delete/:id",
+    passport.authenticate("jwt", { session: false }),
+    productsController.delete
+  );
 };

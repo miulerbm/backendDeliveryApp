@@ -118,4 +118,26 @@ Product.update = (product, result) => {
   );
 };
 
+// MÉTODO PARA ELIMINAR UN PRODUCTO: DELETE
+
+Product.delete = (id, result) => {
+  const sql = `
+    DELETE FROM
+      products
+    WHERE
+      id = ?
+  `;
+
+  db.query(sql, [id], (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(err, null);
+    } else {
+      console.log("Id del producto eliminado:", id);
+      // Como result, solo se manda el id de la categoría registrada
+      result(null, id);
+    }
+  });
+};
+
 module.exports = Product;
