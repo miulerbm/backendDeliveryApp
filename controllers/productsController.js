@@ -103,7 +103,7 @@ module.exports = {
     const product = req.body;
 
     // Llammos al modelo Product y ejecutamos el método update del producto que pasamos por param
-    Product.update(product, (err, result) => {
+    Product.update(product, (err, data) => {
       if (err) {
         return res.status(501).json({
           success: false,
@@ -114,7 +114,7 @@ module.exports = {
       return res.status(201).json({
         success: true,
         message: "El producto se actualizó correctamente",
-        data: `${id}`,
+        data: data,
       });
     });
   },
