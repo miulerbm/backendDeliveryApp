@@ -122,7 +122,7 @@ CREATE TABLE products(
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(180) NOT NULL UNIQUE,
     description TEXT NOT NULL,
-    price DECIMAL NOT NULL,
+    price DOUBLE PRECISION NOT NULL,
     image1 VARCHAR(255) NULL, -- Va a haber un instante en el que no habrán imágenes, cuando el cliente recién cree el producto.
     image2 VARCHAR(255) NULL,
     image3 VARCHAR(255) NULL,
@@ -130,4 +130,16 @@ CREATE TABLE products(
     created_at TIMESTAMP(0) NOT NULL,
     updated_at TIMESTAMP(0) NOT NULL,
     FOREIGN KEY(id_category) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE address(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    address VARCHAR(255) NOT NULL,
+    neighborhood VARCHAR(180) NOT NULL,
+    lat DOUBLE PRECISION NOT NULL,
+    lng DOUBLE PRECISION NOT NULL,
+    created_at TIMESTAMP(0) NOT NULL,
+    updated_at TIMESTAMP(0) NOT NULL,
+    id_user BIGINT NOT NULL,
+    FOREIGN KEY(id_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
